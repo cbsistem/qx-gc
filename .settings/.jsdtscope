@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="simulation/|theme/|test/" kind="src" path="source/class/com/zenesis/gc"/>
+	<classpathentry kind="src" path="source/class/com/zenesis/gc/simulation"/>
+	<classpathentry kind="src" path="source/class/com/zenesis/gc/test"/>
+	<classpathentry kind="src" path="source/class/com/zenesis/gc/theme"/>
+	<classpathentry kind="src" path="source/script"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

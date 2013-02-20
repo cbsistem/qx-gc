@@ -1,0 +1,63 @@
+{
+  "name"    : "com.zenesis.gc",
+
+  "include" :
+  [
+    {
+      "path" : "${QOOXDOO_PATH}/tool/data/config/application.json"
+    }
+  ],
+
+  "export" :
+  [
+    "api",
+    "api-data",
+    "build",
+    "clean",
+    "distclean",
+    "fix",
+    "info",
+    "inspector",
+    "lint",
+    "manifest-validation",
+    "migration",
+    "pretty",
+    "profiling",
+    "source",
+    "source-all",
+    "source-hybrid",
+    "source-server",
+    "source-httpd-config",
+    "source-hybrid",
+    "simulation-build",
+    "simulation-run",
+    "test",
+    "test-source",
+    "translation"
+  ],
+
+  "default-job" : "source-hybrid",
+
+  "let" :
+  {
+    "APPLICATION"  : "com.zenesis.gc",
+    "APPLICATION_MAIN_CLASS" : "${APPLICATION}.test.Application",
+    "QOOXDOO_PATH" : "../../os/qooxdoo",
+    "QXTHEME"      : "qx.theme.Modern",
+    "API_EXCLUDE"  : [ "qx.test.*", "${APPLICATION}.test.*" ],
+    "LOCALES"      : [ "en" ],
+    "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
+    "ROOT"         : "."
+  },
+
+  "jobs" :
+  {
+  	"common": {
+  		"environment": {
+  			"qx.aspects": "true",
+  			"com.zenesis.gc.auto": "true",
+  			"com.zenesis.gc.debugDisposeProtect": "true"
+  		}
+  	}
+  }
+}
