@@ -402,16 +402,9 @@ qx.Class.define("com.zenesis.gc.GC", {
 			if (this.$$gc === undefined)
 				return;
 			
-			// Get the current property value; this can have side effects, EG if
-			//	the property is not yet initialised an exception is raised
 			var pos = fullName.lastIndexOf('.');
-			var get = this["get" + fullName.substring(pos + 4)];
-			var oldValue = undefined;
-			try {
-				oldValue = get.call(this);
-			} catch(e) {
-				// Nothing
-			}
+			var name = qx.lang.String.firstLow(fullName.substring(pos + 1));
+			var oldValue = this.constructor.$$gc_inspector.gcGetPropertyValue(name);
 			var value = args[0];
 			
 			// No change?
@@ -496,19 +489,20 @@ qx.Class.define("com.zenesis.gc.GC", {
 					clz.$$gc_inspector = inspector;
 				}
 			}
+		},
+		
+		enableAutoCollect: function() {
+			return false;
 		}
 
 	},
 	
 	defer: function(statics) {
 		if (qx.core.Environment.get("qx.aspects")) { 
-			if (qx.core.Environment.get("com.zenesis.gc.auto")) {
+			if (qx.core.Environment.get("com.zenesis.gc.GC.enableAutoCollect")) {
 				qx.core.Aspect.addAdvice(statics.__afterConstructor, "after", "constructor");
 				qx.core.Aspect.addAdvice(statics.__beforeDestructor, "before", "destructor");
 				qx.core.Aspect.addAdvice(statics.__beforePropSet, "before", "property", /\.set[A-Z][a-zA-Z0-9_]+$/);
-			}
-			if (qx.core.Environment.get("com.zenesis.gc.debugDisposeProtect")) {
-				qx.core.Aspect.addAdvice(statics.__beforeMemberCall, "before", "member");
 			}
 		}
 	}
