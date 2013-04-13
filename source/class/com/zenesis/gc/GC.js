@@ -474,10 +474,16 @@ qx.Class.define("com.zenesis.gc.GC", {
 		__initClass: function(clz) {
 			if (clz.$$gcInit === undefined) {
 				clz.$$gcInit = true;
-				var collectable = clz.$$gc_collectable;
-				var inspector = clz.$$gc_inspector;
-				if (collectable === undefined || inspector === undefined) {
-					for (var lst = qx.Class.getInterfaces(clz), i = 0; i < lst.length; i++) {
+				var collectable = undefined;
+				var inspector = undefined;
+				for (var tmp = clz; tmp && collectable === undefined && inspector === undefined; tmp = tmp.superclass) {
+					if (collectable === undefined) {
+						collectable = tmp.$$gc_collectable;
+					}
+					if (inspector === undefined) {
+						inspector = tmp.$$gc_inspector;
+					}
+					for (var lst = qx.Class.getInterfaces(tmp), i = 0; i < lst.length && collectable === undefined && inspector === undefined; i++) {
 						if (collectable === undefined) {
 							collectable = lst[i].$$gc_collectable;
 						}
@@ -485,14 +491,10 @@ qx.Class.define("com.zenesis.gc.GC", {
 							inspector = lst[i].$$gc_inspector;
 						}
 					}
-					clz.$$gc_collectable = collectable = !!collectable;
-					clz.$$gc_inspector = inspector;
 				}
+				clz.$$gc_collectable = collectable = !!collectable;
+				clz.$$gc_inspector = inspector;
 			}
-		},
-		
-		enableAutoCollect: function() {
-			return false;
 		}
 
 	},
