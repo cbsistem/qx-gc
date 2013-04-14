@@ -437,7 +437,7 @@ qx.Class.define("com.zenesis.gc.GC", {
 		 */
 		__beforeDestructor: function() {
 			if (this.constructor.$$gc_inspector) {
-				this.constructor.$$gc_inspector.gcCreate(this);
+				this.constructor.$$gc_inspector.gcDispose(this);
 			}
 			return this;
 		},
