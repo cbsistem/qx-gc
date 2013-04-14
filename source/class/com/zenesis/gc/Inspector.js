@@ -20,6 +20,9 @@
 
 ************************************************************************ */
 
+/**
+ * General purpose inspector for inspecting standard Qooxdoo properties
+ */
 qx.Class.define("com.zenesis.gc.Inspector", {
 	extend: qx.core.Object,
 	implement: [ com.zenesis.gc.IInspector ],
@@ -72,6 +75,12 @@ qx.Class.define("com.zenesis.gc.Inspector", {
 	},
 	
 	statics: {
+		/**
+		 * Gets the list of property names for the class and all superclasses, caching the 
+		 * results in the class itself
+		 * @param clz {Class} the class to get property names from
+		 * @returns {String[]} array of property names
+		 */
 		getProperties: function(clz) {
 			if (clz.hasOwnProperty("$$gc_properties"))
 				return clz.$$gc_properties;

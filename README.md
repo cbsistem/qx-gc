@@ -26,81 +26,10 @@ used for caching mechanisms, where something is kept around (in the cache) only 
 code needs it.  Javascript does not support this - but Qx-GC does with the com.zenesis.gc.WeakRef
 class.
 
-How does it work?
------------------
-Qx-GC doesn't have a magic connection inside the Javascript VM, it only works by being able
-to detect what objects are referred to - and it cannot see references made by ordinary "var"
-declarations or class members, but it can see objects referred to from normal Qooxdoo property 
-declarations.  
+Documentation
+-------------
+Please see the Qooxdoo contrib site for documentation:
 
-In practice, this is adequate for many situations, but where a class refers to objects in other 
-ways (eg a class' member variable) it's easy to write a custom "inspector" which can look inside
-the objects detect those references.  Qx-GC includes an inspector for qx.data.Array.
-
-Qx-GC only works on classes that it knows that it can detect references from; this makes it safe 
-to use, without having to make sure that other libraries (or even *all* of your classes) support 
-Qx-GC.
-
-
-How do I use it?
-----------------
-In order to detect unused objects, Qx-GC needs to know two things: a list of all objects which 
-can be Garbage Collected, and the root(s) of the tree of object references (IE where objects
-refer to other objects, the root object is the top of the tree and is not referred to by anything
-else).
-
-Any class that you want to be Garbage Collected (IE automatically dispose()'d when no longer
-used) must either implement com.zenesis.gc.ICollectable interface, or be registered with Qx-GC
-by calling:
-
-	com.zenesis.gc.GC.getInstance().registerCollectable(clazz)
-
-where clazz is the class or interface that you want monitored.
-
-When Qx-GC collects garbage, it starts from of the root objects and checks every reference 
-recursively; when complete, any Collectable object which is not referred to is dispose()'d.
-
-To specify root objects, either call:
-
-	com.zenesis.gc.GC.getInstance().addRoot(myRootObject);
+	http://qooxdoo.org/contrib/project/qx-gc
 	
-or use an instance of com.zenesis.gc.Ref.  In many cases, there will only be a few roots in your
-application, and the easiest way to manage these is to use com.zenesis.gc.Ref.  EG:
-
-qx.Class.define("myapp.MyClass", {
-	construct: function(someCollectableObject) {
-		this.base(arguments);
-		this.__ref = new com.zenesis.gc.Ref(someCollectableObject);
-	},
-	members: {
-		__ref: null,
-		myMethod: function() {
-			this.__ref.someMethod();
-		}
-	}
-});
-
-
-Writing custom inspectors
--------------------------
-
-For each class that you want to be automatically tracked, you must call 
-	com.zenesis.gc.GC.getInstance().registerInspector(clazz,inpector)
-where clazz is the class or interface you want to track instances of, and inspector is an
-instance of com.zenesis.gc.IInspector that is able to look inside instances of the class to 
-detect references to other objects.
-
-Where you have a hierachy of derived classes, it is not necessary to specify every class - if you 
-specify an inspector for a class, then all instance of that class and all derived classes are 
-tracked.
-
-You can also specify that a class implements com.zenesis.gc.ICollectable; there are no methods to
-implement, it's just a marker interface that means that the object can be inspected to find 
-properties which refer to other objects.
-
-
-Specifying Roots
-----------------
-The list of roots must be provided manually, and this can be done by either calling
-com.zenesis.gc.GC.getInstance().addRoot(root) and passing the root, or by using an instance of
-com.zenesis.gc.GC.Ref which will include your object within its own root.
+	
