@@ -16,9 +16,7 @@ rm -f dist/dist.zip
 rewriteManifest ""
 zip -r dist/dist.zip * -x dist
 SHA=`shasum dist/dist.zip`
-echo SHA=$SHA
 SHA=${SHA/%  dist\/dist.zip/}
-echo SHA=$SHA
 rewriteManifest "$SHA"
 
 git add dist/dist.zip
