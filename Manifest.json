@@ -1,34 +1,31 @@
 {
-  "info" : 
-  {
-    "name" : "com.zenesis.gc",
-
-    "summary" : "Custom Application",
-    "description" : "This is a skeleton for a custom application with qooxdoo.",
-    
-    "homepage" : "http://some.homepage.url/",
-
-    "license" : "SomeLicense",
-    "authors" : 
-    [
+  "info": {
+    "name": "com.zenesis.gc",
+    "summary": "Automatic Garbage Collection",
+    "description": "Automatic Garbage Collection - automatically calls dispose() on objects which are no longer in needed",
+    "homepage": "http://qooxdoo.org/contrib/project/qx-gc",
+    "license": "Same license as Qooxdoo (http://wooxdoo.org)",
+    "authors": [
       {
-        "name" : "First Author (uid)",
-        "email" : "first.author@some.domain"
+        "name": "John Spackman",
+        "email": "john.spackman@zenesis.com"
       }
     ],
-
-    "version" : "trunk",
-    "qooxdoo-versions": ["2.2"]
+    "version": "master",
+    "qooxdoo-versions": [
+      "2.2",
+      "3.0"
+    ],
+    "download": "https://raw.github.com/johnspackman/qx-gc/master/dist/dist.zip",
+    "category": "tool",
+    "checksum": "efa7efbffc747f7f46372d064c38f4fa8664e5cd"
   },
-  
-  "provides" : 
-  {
-    "namespace"   : "com.zenesis.gc",
-    "encoding"    : "utf-8",
-    "class"       : "source/class",
-    "resource"    : "source/resource",
-    "translation" : "source/translation",
-    "type"        : "application"
+  "provides": {
+    "namespace": "com.zenesis.gc",
+    "encoding": "utf-8",
+    "class": "source/class",
+    "resource": "source/resource",
+    "translation": "source/translation",
+    "type": "application"
   }
 }
-
