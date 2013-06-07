@@ -19,6 +19,6 @@ SHA=`shasum dist/dist.zip`
 SHA=${SHA/%  dist\/dist.zip/}
 rewriteManifest "$SHA"
 
-git add dist/dist.zip
+git add dist/dist.zip Manifest.json
 git commit -m 'building distribution'
 git push
