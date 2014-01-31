@@ -42,7 +42,7 @@
   {
     "APPLICATION"  : "com.zenesis.gc",
     "APPLICATION_MAIN_CLASS" : "${APPLICATION}.test.Application",
-    "QOOXDOO_PATH" : "../../os/qooxdoo",
+    "QOOXDOO_PATH" : "../../../../../../Local/WebContent/public/grasshopper/qooxdoo-trunk",
     "QXTHEME"      : "qx.theme.Modern",
     "API_EXCLUDE"  : [ "qx.test.*", "${APPLICATION}.test.*" ],
     "LOCALES"      : [ "en" ],
@@ -55,7 +55,7 @@
   	"common": {
   		"environment": {
   			"qx.aspects": "true",
-  			"com.zenesis.gc.auto": "true",
+  			"com.zenesis.gc.GC.enableAutoCollect": "true",
   			"com.zenesis.gc.debugDisposeProtect": "true"
   		}
   	}

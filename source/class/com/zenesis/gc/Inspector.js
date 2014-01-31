@@ -28,7 +28,31 @@ qx.Class.define("com.zenesis.gc.Inspector", {
 	implement: [ com.zenesis.gc.IInspector ],
 	
 	members: {
-		
+	  
+	  /**
+	   * Quick method for recording a new reference to an object
+	   */
+    add: function(parent, child) {
+      com.zenesis.gc.GC.addReference(parent, child);
+    },
+    
+    /**
+     * Quick method for recording a removed reference to an object
+     */
+    remove: function(parent, child) {
+      com.zenesis.gc.GC.removeReference(parent, child);
+    },
+    
+    /**
+     * Quick method for recording a change in value
+     */
+    change: function(parent, newValue, oldValue) {
+      if (newValue !== oldValue) {
+        com.zenesis.gc.GC.removeReference(parent, oldValue);
+        com.zenesis.gc.GC.addReference(parent, newValue);
+      }
+    },
+    
 		/*
 		 * @Override com.zenesis.gc.Inspector.gcIterate
 		 */
@@ -40,6 +64,8 @@ qx.Class.define("com.zenesis.gc.Inspector", {
 				if (value)
 					mark.call(context, value);
 			}
+			if (qx.Interface.objectImplements(obj, com.zenesis.gc.IIterable))
+			  obj.gcIterate(mark, context);
 		},
 		
 		/*
@@ -106,9 +132,12 @@ qx.Class.define("com.zenesis.gc.Inspector", {
 				}
 				
 				// Add the property
-				properties[name] = {
-					get: clz.prototype["get" + qx.lang.String.firstUp(name)]	
-				};
+				var get = clz.prototype["get" + qx.lang.String.firstUp(name)];
+				if (get) {
+  				properties[name] = {
+  					get: get	
+  				};
+				}
 			}
 			
 			return clz.$$gc_properties = properties;

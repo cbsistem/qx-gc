@@ -1,3 +1,26 @@
+
+
+** NOTE **
+
+The principal requirements are that (1) it is possible to inspect objects to see what references they have, and (2) that changes to 
+references can be detected.
+
+These requirements are met: (1) is achieved by inspecting the properties and (2) is met by using aspects to monitor changes in the
+properties; for private references, this can also be met by using custom "inspectors" that can see inside the classes and react to
+changes.  
+
+This is relatively trivial for new class heirarchies (and GC by default only operates on explicitly nominated classes heirachies), 
+but retrofitting to existing class heirarchies needs to be done with some care; adding in inspector classes for private members
+has it's implications too.
+
+IMHO there is an argument that GC would be most useful if it could navigate qx.ui.core.Widget and while I've attempted to do this
+it's not complete and is proving hard to debug some of the problems which have cropped up - the current version of Chrome gets
+a stack overflow and becomes unstable and Firefox's debugger is unable to debug during startup (which is not GC related).  I think
+that this is caused by exceptions due to calling getXxxx on properties that are not yet initialised, but I have run out of time
+to take this further.
+
+
+
 qx-gc - Automatic Garbage Collection for Qooxdoo
 ================================================
 
